@@ -2,23 +2,17 @@ package project;
 
 public class AnhTai {
     private String name;
-    private String job; // e.g., Vocalist, Dancer, Rapper, etc.
-    private int firepower;  // Track firepower gained from votes
-    private int votingScore; // Track voting score (accumulated from each round)
+    private String job;
+    private int firepower;
+    private int votingScore;
 
     public AnhTai(String name, String job) {
         this.name = name;
         this.job = job;
-        this.firepower = 0;
-        this.votingScore = 0;
+        this.firepower = 0; // Initial firepower
+        this.votingScore = 0; // Initial voting score
     }
 
-    // Add firepower based on votes
-    public void addFirepower(int votes) {
-        this.firepower += votes * 10;  // Each vote is worth 10 firepower points
-    }
-
-    // Getter methods
     public String getName() {
         return name;
     }
@@ -31,12 +25,16 @@ public class AnhTai {
         return firepower;
     }
 
+    public void addFirepower(int amount) {
+        this.firepower += amount;
+    }
+
     public int getVotingScore() {
         return votingScore;
     }
 
-    public void addVotingScore(int score) {
-        this.votingScore += score;
+    public void addVotingScore(int amount) {
+        this.votingScore += amount;
     }
 
     @Override

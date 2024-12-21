@@ -1,48 +1,34 @@
 package project;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class House {
     private String name;
-    private List<AnhTai> members; // List to store members of the house
-    private int totalFirepower; // Total firepower of the house
+    private LinkedList<AnhTai> members;
 
     public House(String name) {
         this.name = name;
-        this.members = new ArrayList<>();
-        this.totalFirepower = 0;
+        this.members = new LinkedList<>();
     }
 
-    // Add a contestant to the house
-    public void addMember(AnhTai contestant) {
-        members.add(contestant);
-    }
-
-    // Add firepower to the house (total firepower from all members)
-    public void addFirepower(int firepower) {
-        this.totalFirepower += firepower;
-    }
-
-    // Getters
     public String getName() {
         return name;
     }
 
-    public List<AnhTai> getMembers() {
+    public LinkedList<AnhTai> getMembers() {
         return members;
     }
 
-    public int getTotalFirepower() {
-        return totalFirepower;
+    public void addMember(AnhTai member) {
+        members.add(member);
     }
 
-    public void resetFirepower() {
-        this.totalFirepower = 0; // Reset for next round
+    public void eliminateMember(AnhTai member) {
+        members.remove(member);
     }
 
     @Override
     public String toString() {
-        return name + " (Members: " + members.size() + ")";
+        return "House: " + name + " - Members: " + members.size();
     }
 }

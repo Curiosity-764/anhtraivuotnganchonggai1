@@ -1,45 +1,50 @@
 package project;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Competition {
-    private List<House> houses;
-    private int roundCount;
+    private HashMap<String, AnhTai> allContestants; // Contestants stored in a HashMap
+    private LinkedList<House> houses; // Houses stored in a LinkedList
+    private int totalVoters = 350; // Number of voters (not fully used, but can be factored in)
 
-    public Competition(List<House> houses) {
+    public Competition(LinkedList<House> houses, HashMap<String, AnhTai> allContestants) {
         this.houses = houses;
-        this.roundCount = 1;
+        this.allContestants = allContestants;
     }
 
-    // Run the competition
     public void runCompetition() {
-        while (houses.size() > 1) {
-            System.out.println("\nRound " + roundCount);
-            Round round = new Round(houses);
-            round.startRound();
-            round.showResults();
-            roundCount++;
-            eliminate();
+        // Start the competition with an announcement
+        System.out.println("Welcome to the competition!");
+        announceContestants();
+
+        // Simulate each round (for simplicity, we'll just simulate 3 rounds here)
+        for (int round = 1; round <= 3; round++) {
+            Round currentRound = new Round(round, houses, allContestants);
+            currentRound.conductRound();
         }
-        System.out.println("\nCompetition has ended!");
+
+        // Final results
+        System.out.println("\nCompetition Finished! Final Results:");
+        displayFinalScores();
     }
 
-    // Eliminate the lowest-performing contestant from each house (based on firepower)
-    private void eliminate() {
-        for (House house : houses) {
-            AnhTai lowestPerforming = null;
-            for (AnhTai contestant : house.getMembers()) {
-                if (lowestPerforming == null || contestant.getFirepower() < lowestPerforming.getFirepower()) {
-                    lowestPerforming = contestant;
-                }
-            }
-
-            // Remove the lowest-performing contestant
-            house.getMembers().remove(lowestPerforming);
-            System.out.println("Eliminated: " + lowestPerforming.getName() + " from House " + house.getName());
+    public void announceContestants() {
+        System.out.println("Contestants: ");
+        for (Map.Entry<String, AnhTai> entry : allContestants.entrySet()) {
+            System.out.println(entry.getValue());
         }
+    }
 
-        // Remove houses that no longer have contestants
-        houses.removeIf(house -> house.getMembers().isEmpty());
+    public void displayFinalScores() {
+        // Display the scores of each contestant
+        for (House house : houses) {
+            System.out.println(house.getName() + " has the following contestants:");
+            for (AnhTai member : house.getMembers()) {
+                System.out.println(member);
+            }
+        }
     }
 }
